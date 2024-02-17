@@ -1,0 +1,93 @@
+function convertFile(content, callback) {
+  setTimeout(function () {
+    // Конвертація файлу...
+    callback(null, `Конвертований вміст: ${content.toUpperCase()}`);
+  }, 1000);
+}
+
+function loadFile(filename) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // console.log("2222");
+      resolve(`Вміст файлу ${filename}`);
+    }, 2000);
+  });
+}
+
+function convertFile(content) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(`Конвертований вміст: ${content.toUpperCase()}`);
+    }, 1000);
+  });
+}
+
+function saveFile(convertedContent) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // console. log("saveFile");
+      reject("Error test");
+    }, 1500);
+  });
+}
+
+function sendFileToClient() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // console.log("sendFileToClient");
+      reject("Error test 2");
+    }, 5000);
+  });
+}
+
+function getlnfoFromFile(file) {
+  // console.log(file, 1111);
+  return Promise.resolve(file + 100);
+}
+
+async function performFile(path) {
+  const content = await loadFile(path);
+
+  return [
+    async () => {
+      const data = await convertFile(content);
+
+      return [
+        async () => {
+          const convertedContent = await getlnfoFromFile(data);
+
+          await saveFile(convertedContent);
+
+          await sendFileToClient();
+        },
+        data,
+      ];
+    },
+    content,
+  ];
+}
+
+// performFile("file.png").then(([next, content]) => console.log(next, content));
+
+// або наступний варіант
+
+async function main() {
+  const [next, content] = await performFile("file.png");
+
+  console.log(next, content);
+
+  //......
+  //......
+
+  // await next();
+}
+
+main();
+
+// Обидка варіанти видають помилку. (Але на відео такої помилки не виникає не зважаючи на той самий код)
+// Помилка полягає в тому, що функція convertFile оголошена двічі.
+// Перше оголошення в прототипі стандартної функції, а друге - як обіцяна функція.
+// Цей конфлікт призводить до помилки.
+
+// Щоб виправити цю ситуацію, потрібно перейменувати одну з цих функцій.
+// Наприклад, замість оголошення "function convertFile(content)" можна написати "function asyncConvertFile(content)" або навпаки.

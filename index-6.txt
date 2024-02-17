@@ -1,0 +1,28 @@
+const asyncFunc = () => new Promise((resolve) => setTimeout(resolve, 1000));
+
+async function* asyncGenerator() {
+  await asyncFunc();
+  yield "After 1 second";
+  await asyncFunc();
+  yield "After 2 seconds";
+}
+async function runGenerator() {
+  const generator = asyncGenerator();
+
+  // let result = null;
+
+  // result = await generator.next();
+
+  // console.log(result);
+
+  // result = await generator.next();
+
+  // console.log(result);
+
+  for await (const result of generator) {
+    console.log(result);
+    await asyncFunc();
+  }
+}
+
+runGenerator();

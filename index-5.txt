@@ -1,0 +1,45 @@
+function* myGenerator() {
+  try {
+    const test = yield 1;
+
+    const value = yield 2;
+
+    console.log(test, "test");
+
+    yield 4;
+
+    yield value;
+  } catch (e) {
+    console.log(e);
+  } finally {
+    yield 5;
+
+    yield 6;
+  }
+
+  yield 7;
+
+  yield 8;
+}
+
+const generator = myGenerator();
+
+console.log(generator.next().value);
+
+console.log(generator.next(3).value);
+
+console.log(generator.throw(new Error()));
+
+// console.log(generator.return(10).value);
+
+console.log(generator.next(3).value);
+
+// console.log(generator.return(20));
+
+console.log(generator.next());
+
+console.log(generator.next());
+
+console.log(generator.next());
+
+console.log(generator.next());

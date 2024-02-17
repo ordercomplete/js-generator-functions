@@ -1,0 +1,48 @@
+function* processOrder(order) {
+  yield validateOrder(order);
+  yield processPayment(order);
+  yield sendOrderConfirmation(order);
+
+  return order;
+}
+
+// function getOrderDetails() {
+//   const order = { id: 123, product: "Товар", quantity: 2 };
+//   return order;
+// }
+
+function validateOrder(order) {
+  const isValid = order.quantity > 0;
+  return isValid;
+}
+
+function processPayment(order) {
+  const isPaymentSuccessful = Math.random() < 0.5;
+  return isPaymentSuccessful;
+}
+
+function sendOrderConfirmation() {
+  const isConfirmationSent = true;
+  return isConfirmationSent;
+}
+
+const order = { id: 123, product: "Товар", quantity: 2 };
+
+const orderProcessing = processOrder(order);
+
+const isValidateOrder = orderProcessing.next().value;
+
+if (isValidateOrder === false) {
+  //...
+}
+
+const isProcessPayment = orderProcessing.next().value;
+
+if (isProcessPayment === false) {
+  //...
+}
+
+console.log(orderProcessing.next());
+console.log(orderProcessing.next());
+console.log(orderProcessing.next());
+console.log(orderProcessing.next());

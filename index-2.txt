@@ -1,0 +1,33 @@
+function* myGenerator() {
+  console.log("Start");
+
+  yield 1;
+
+  console.log("Start 2");
+
+  yield 2;
+
+  console.log("Start 3");
+
+  yield 3;
+
+  console.log("End");
+}
+
+const generator = myGenerator();
+
+const resultl = generator.next();
+
+console.log(resultl);
+
+const result2 = generator.next();
+
+console.log(result2);
+
+const result3 = generator.next();
+
+console.log(result3);
+
+const result4 = generator.next();
+
+console.log(result4);
